@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Example</title>
+</head>
+<body>
+    <h1>WebSocket Example for btcrub</h1>
+    <ul id="trade-history"></ul>
+
+    <script>
+        const tradeHistory = document.getElementById('trade-history');
+
+        // Функция для создания WebSocket соединения для символа "btcrub"
+        function createWebSocket() {
+            const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcrub@trade');
+            
+            ws.onopen = () => {
+                console.log('WebSocket connection opened for btcrub');
+            };
+            
+            ws.onmessage = (event) => {
+                const tradeData = JSON.parse(event.data);
+                console.log('Received trade data for btcrub:', tradeData);
+                
+                // Преобразуйте данные о сделке в нужный формат JSON
+                const formattedData = {
+                    exchanger: 'binance',
+                    courses: [
+                        {
+                            direction: 'BTCRUB',
+                            value: parseFloat(tradeData.p).toFixed(6), // Округляем до 6 знаков после запятой
+                        }
+                    ]
+                };
+                
+                // Преобразуйте JSON-ответ в форматированную строку
+                const formattedString = JSON.stringify(formattedData, null, 2);
+                
+                // Добавьте новую сделку в начало списка
+                const listItem = document.createElement('li');
+                listItem.textContent = formattedString;
+                tradeHistory.insertBefore(listItem, tradeHistory.firstChild);
+            };
+            
+            ws.onclose = () => {
+                console.log('WebSocket connection closed for btcrub');
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error for btcrub:', error);
+            };
+        }
+
+        // Создайте WebSocket соединение для символа "btcrub"
+        createWebSocket();
+    </script>
+</body>
+</html>
