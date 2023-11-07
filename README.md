@@ -48,13 +48,16 @@ http://localhost:8000/courses
 
 ## API Endpoints
 
-### '/courses': 
+### 1. '/courses': 
 
 Главная страница проекта на которой выводятся все требуемые валютные пары:
 
 <em>BTC-RUB,BTC-USD,ETH-RUB, ETH-USD, USDTTRC-RUB, USDTTRC-USD, USDTERC-RUB, USDTERC-USD</em>
+```
+http://localhost:8000/courses
+```
 
-### '/courses/{symbol}':
+### 2. '/courses/{symbol}':
 
 Страница с информацией о валютной паре, где {symbol} - это символ валютной пары.
 Пример:
@@ -67,6 +70,7 @@ http://localhost:8000/courses/btcusdt
 
 Вы можете провести нагрузочное тестирование с использованием инструмента Locust. Для этого выполните следующие шаги:
 1. Нужно убедиться, что вы активировали виртуальное окружение
+
 Для Windows:
 ```
 echo %VIRTUAL_ENV%
