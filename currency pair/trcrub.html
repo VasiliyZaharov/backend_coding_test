@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WebSocket Example</title>
+    <title>WebSocket </title>
 </head>
 <body>
-    <h1>WebSocket Example for trcrub</h1>
-    <ul id="trade-history"></ul>
+    <h1>WebSocket for trcrub</h1>
+    <div id="trade-history"></div>
 
     <script>
         const tradeHistory = document.getElementById('trade-history');
 
-        // Функция для создания WebSocket соединения для символа "trcrub"
         function createWebSocket() {
             const ws = new WebSocket('wss://stream.binance.com:9443/ws/trcrub@trade');
             
@@ -22,22 +21,19 @@
                 const tradeData = JSON.parse(event.data);
                 console.log('Received trade data for trcrub:', tradeData);
                 
-                // Преобразуйте данные о сделке в нужный формат JSON
                 const formattedData = {
                     exchanger: 'binance',
                     courses: [
                         {
                             direction: 'TRCRUB',
-                            value: parseFloat(tradeData.p).toFixed(6), // Округляем до 6 знаков после запятой
+                            value: parseFloat(tradeData.p).toFixed(6),
                         }
                     ]
                 };
                 
-                // Преобразуйте JSON-ответ в форматированную строку
                 const formattedString = JSON.stringify(formattedData, null, 2);
                 
-                // Добавьте новую сделку в начало списка
-                const listItem = document.createElement('li');
+                const listItem = document.createElement('div');
                 listItem.textContent = formattedString;
                 tradeHistory.insertBefore(listItem, tradeHistory.firstChild);
             };
@@ -51,7 +47,6 @@
             };
         }
 
-        // Создайте WebSocket соединение для символа "trcrub"
         createWebSocket();
     </script>
 </body>
